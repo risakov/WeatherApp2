@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		56EA803F2CA99763005DD5A4 /* DetailCityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56EA803E2CA99763005DD5A4 /* DetailCityViewController.swift */; };
+		56EA80412CA997A5005DD5A4 /* NextHoursView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56EA80402CA997A5005DD5A4 /* NextHoursView.swift */; };
 		6C1398302C5F5EEA007F9B10 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C13982F2C5F5EEA007F9B10 /* HomeViewModel.swift */; };
 		6C1398322C5F5EF7007F9B10 /* WeatherParameters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C1398312C5F5EF7007F9B10 /* WeatherParameters.swift */; };
 		6C1398342C5F5F13007F9B10 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C1398332C5F5F13007F9B10 /* HomeViewController.swift */; };
@@ -29,6 +31,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		56EA803E2CA99763005DD5A4 /* DetailCityViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailCityViewController.swift; sourceTree = "<group>"; };
+		56EA80402CA997A5005DD5A4 /* NextHoursView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NextHoursView.swift; sourceTree = "<group>"; };
 		6C13982F2C5F5EEA007F9B10 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		6C1398312C5F5EF7007F9B10 /* WeatherParameters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherParameters.swift; sourceTree = "<group>"; };
 		6C1398332C5F5F13007F9B10 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
@@ -148,6 +152,8 @@
 			children = (
 				6C13982F2C5F5EEA007F9B10 /* HomeViewModel.swift */,
 				6C13983F2C5F84AE007F9B10 /* HomeCellViewModel.swift */,
+				56EA803E2CA99763005DD5A4 /* DetailCityViewController.swift */,
+				56EA80402CA997A5005DD5A4 /* NextHoursView.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -234,11 +240,13 @@
 				6C1398392C5F679B007F9B10 /* HomeCell.swift in Sources */,
 				6C1398322C5F5EF7007F9B10 /* WeatherParameters.swift in Sources */,
 				6C18CF802C5D135000F213D2 /* AppDelegate.swift in Sources */,
+				56EA803F2CA99763005DD5A4 /* DetailCityViewController.swift in Sources */,
 				6C1398402C5F84AE007F9B10 /* HomeCellViewModel.swift in Sources */,
 				6C1398302C5F5EEA007F9B10 /* HomeViewModel.swift in Sources */,
 				6C1398342C5F5F13007F9B10 /* HomeViewController.swift in Sources */,
 				6C13984C2C5F8EEE007F9B10 /* Coordinates.swift in Sources */,
 				6C1398502C5F943D007F9B10 /* WeatherResponse.swift in Sources */,
+				56EA80412CA997A5005DD5A4 /* NextHoursView.swift in Sources */,
 				6C9F746E2C6263A900D317D2 /* Double+UnixTime.swift in Sources */,
 				6C13983C2C5F7733007F9B10 /* UIColor+Hex.swift in Sources */,
 				6C13983E2C5F775A007F9B10 /* UIColor+Styling.swift in Sources */,
