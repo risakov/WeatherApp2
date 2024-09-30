@@ -16,11 +16,5 @@ class DetailCityViewController: UIViewController {
         let nextHoursView = NextHoursView()
         view.addSubview(nextHoursView)
         nextHoursView.translatesAutoresizingMaskIntoConstraints = false
-        
-        
-        
     }
-    
-    
-    
 }
