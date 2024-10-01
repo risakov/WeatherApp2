@@ -13,5 +13,3 @@ class DetailCityViewController: UIViewController {
         super.viewDidLoad()
     }
 }
-
-
