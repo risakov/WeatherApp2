@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 56;
+	objectVersion = 70;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -49,6 +49,10 @@
 		6C9F746D2C6263A900D317D2 /* Double+UnixTime.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Double+UnixTime.swift"; sourceTree = "<group>"; };
 		6CCB4AB72C6299D0006C942C /* WeatherAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherAPI.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		D6D337DB2CAC5B2000520593 /* DetailCity */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = DetailCity; sourceTree = "<group>"; };
+/* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		6C18CF792C5D135000F213D2 /* Frameworks */ = {
@@ -123,6 +127,7 @@
 		6C18CF7E2C5D135000F213D2 /* WeatherApp */ = {
 			isa = PBXGroup;
 			children = (
+				D6D337DB2CAC5B2000520593 /* DetailCity */,
 				6C1398452C5F8C32007F9B10 /* Services */,
 				6C13983A2C5F7726007F9B10 /* Extensions */,
 				6C13982C2C5F5ECB007F9B10 /* Home */,
@@ -166,6 +171,9 @@
 			buildRules = (
 			);
 			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				D6D337DB2CAC5B2000520593 /* DetailCity */,
 			);
 			name = WeatherApp;
 			packageProductDependencies = (
