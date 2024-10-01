@@ -44,8 +44,6 @@ class HomeViewController: UIViewController {
             $0.left.equalToSuperview()
             $0.right.equalToSuperview()
             $0.bottom.equalToSuperview()
-            
-            
         }
         tableView.register(HomeCell.self, forCellReuseIdentifier: HomeCell.Constants.identifier)
     }
@@ -68,9 +66,9 @@ class HomeViewController: UIViewController {
             textfield.textColor = UIColor.white
             
             if let leftView = textfield.leftView as? UIImageView {
-                    leftView.image = leftView.image?.withRenderingMode(.alwaysTemplate)
-                    leftView.tintColor = UIColor.white
-                }
+                leftView.image = leftView.image?.withRenderingMode(.alwaysTemplate)
+                leftView.tintColor = UIColor.white
+            }
         }
         
         searchBar.snp.makeConstraints { make in
