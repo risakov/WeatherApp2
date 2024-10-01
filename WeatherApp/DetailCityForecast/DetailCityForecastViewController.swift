@@ -1,28 +1,27 @@
-//
-//  ForecastCityWeatherView.swift
-//  WeatherApp
-//
-//  Created by Sergey on 9/28/24.
-//
-
 import UIKit
 
 class DetailCityForecastViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = .black
+        self.view.backgroundColor = .white
         
         setupNavigationBar()
     }
     
     private func setupNavigationBar() {
-        navigationController?.navigationBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
-        navigationController?.navigationBar.barTintColor = UIColor.clear
-        title = "DetailCity"
-        navigationController?.navigationBar.prefersLargeTitles = true
+        navigationItem.title = Constants.title
     }
     
+}
+
+// MARK: - Constants
+extension DetailCityForecastViewController {
+    
+    private enum Constants {
+        
+        static let title = "DetailCity"
+    }
 }
 
 
