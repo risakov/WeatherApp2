@@ -25,11 +25,6 @@ class ShortForecastView: UIView {
         return label
     }
     
-    struct WeatherOnTime {
-        let time: String
-        let dayTemperature: Int
-        let nightTemperature: Int
-    }
     
     private func createForecastRow(weather: WeatherOnTime) -> UIStackView {
         let timeLabel = createLabel(text: weather.time)
