@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		56EA808D2CB16C21005DD5A4 /* GeneralErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56EA808C2CB16C21005DD5A4 /* GeneralErrorView.swift */; };
 		6C1398302C5F5EEA007F9B10 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C13982F2C5F5EEA007F9B10 /* HomeViewModel.swift */; };
 		6C1398322C5F5EF7007F9B10 /* WeatherParameters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C1398312C5F5EF7007F9B10 /* WeatherParameters.swift */; };
 		6C1398342C5F5F13007F9B10 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C1398332C5F5F13007F9B10 /* HomeViewController.swift */; };
@@ -29,6 +30,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		56EA808C2CB16C21005DD5A4 /* GeneralErrorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralErrorView.swift; sourceTree = "<group>"; };
 		6C13982F2C5F5EEA007F9B10 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		6C1398312C5F5EF7007F9B10 /* WeatherParameters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherParameters.swift; sourceTree = "<group>"; };
 		6C1398332C5F5F13007F9B10 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
@@ -63,6 +65,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		56EA808B2CB16BA1005DD5A4 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				56EA808C2CB16C21005DD5A4 /* GeneralErrorView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 		6C13982C2C5F5ECB007F9B10 /* Home */ = {
 			isa = PBXGroup;
 			children = (
@@ -80,6 +90,7 @@
 				6C13983B2C5F7733007F9B10 /* UIColor+Hex.swift */,
 				6C13983D2C5F775A007F9B10 /* UIColor+Styling.swift */,
 				6C9F746D2C6263A900D317D2 /* Double+UnixTime.swift */,
+				56EA808B2CB16BA1005DD5A4 /* Views */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -234,6 +245,7 @@
 				6C1398392C5F679B007F9B10 /* HomeCell.swift in Sources */,
 				6C1398322C5F5EF7007F9B10 /* WeatherParameters.swift in Sources */,
 				6C18CF802C5D135000F213D2 /* AppDelegate.swift in Sources */,
+				56EA808D2CB16C21005DD5A4 /* GeneralErrorView.swift in Sources */,
 				6C1398402C5F84AE007F9B10 /* HomeCellViewModel.swift in Sources */,
 				6C1398302C5F5EEA007F9B10 /* HomeViewModel.swift in Sources */,
 				6C1398342C5F5F13007F9B10 /* HomeViewController.swift in Sources */,
