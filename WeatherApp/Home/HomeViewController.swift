@@ -114,14 +114,9 @@ extension HomeViewController: UITableViewDataSource {
 // MARK: - UISearchBarDelegate
 extension HomeViewController: UISearchBarDelegate {
     
-    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        print(searchText)
-    }
-    
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchBar.resignFirstResponder()
     }
-    
 }
 
 // MARK: - Constants
