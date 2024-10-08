@@ -16,12 +16,6 @@ class DaysForecastView: UIView {
         return stackView
     }()
 
-    struct DaysForecast {
-        let time: String
-        let nightTemperature: Int
-        let dayTemperature: Int
-    }
-
     private func createHourForecastView(hour: String, nightTemperature: Int, dayTemperature: Int) -> UIView {
         let view = UIView()
         view.backgroundColor = .white
@@ -57,6 +51,7 @@ class DaysForecastView: UIView {
     }
 
     private func setupViews() {
+        addSubview(stackView)
         for (hour, nightTemperature, dayTemperature) in [
             ("17:44", 15, 29),
             ("20:44", 15, 29),
@@ -71,24 +66,27 @@ class DaysForecastView: UIView {
             stackView.addArrangedSubview(hourForecastView)
         }
     }
-
+    private func addSubviews() {
+        addSubview(stackView)
+    }
+    
+    private func setuplayout() {
+        stackView.snp.makeConstraints { make in
+            make.leading.trailing.equalToSuperview().inset(10)
+        }
+    }
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupViews()
-        addSubview(stackView)
-        stackView.snp.makeConstraints { make in
-            make.edges.equalToSuperview().inset(10)
+        addSubviews()
+        setuplayout()
         }
-    }
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
         setupViews()
-        addSubview(stackView)
-        stackView.snp.makeConstraints { make in
-            make.leading.trailing.equalToSuperview().inset(10)
-            
+        addSubviews()
+        setuplayout()
         }
     }
-}
-
