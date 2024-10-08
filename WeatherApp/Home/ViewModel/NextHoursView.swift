@@ -18,8 +18,8 @@ class NextHoursView: UIView {
         static let borderWidth: CGFloat = 1
     }
     
-    let hours: [String] = ["Now", "10PM", "11PM", "12AM", "1AM"]
-    let temperatures: [Int] = [21, 21, 19, 19, 19]
+    private let hours: [String] = ["Now", "10PM", "11PM", "12AM", "1AM"]
+    private let temperatures: [Int] = [21, 21, 19, 19, 19]
     
     override init(frame: CGRect) {
         super.init(frame: frame)
