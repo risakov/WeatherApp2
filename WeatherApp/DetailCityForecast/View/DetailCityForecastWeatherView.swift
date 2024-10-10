@@ -4,7 +4,7 @@ import SnapKit
 
 class DetailCityForecastWeatherView: UIView {
     
-    private let model = DetailCityForecastWeatherModel(city: "Rostov-on-Don", temp: "21", weather: "Overcast Clouds")
+    private let model = DetailCityForecastWeatherModel(city: "Rostov-on-Don", temp: 21, weather: "Overcast Clouds")
     
     private lazy var stackView: UIStackView = {
         let stackView = UIStackView()
