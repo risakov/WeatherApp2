@@ -4,26 +4,29 @@
 //
 //  Created by Анастасия Лыгина on 05.10.2024.
 //
+import UIKit
 
-import SwiftUI
-
-struct GeneralErrorView: View {
-    var body: some View {
-        ZStack {
-            Color.black
-                .ignoresSafeArea()
-
-            Text("Sorry, \nsomething went \nwrong \nPlease try again")
-                .font(.system(size: 35, weight: .bold))
-                .multilineTextAlignment(.leading)
-                .foregroundColor(.white)
-                .minimumScaleFactor(0.5)
+class GeneralErrorView: UIViewController {
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        let backgroundView = UIView()
+        backgroundView.backgroundColor = .black
+        view.addSubview(backgroundView)
+        
+        backgroundView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
         }
-    }
-}
-
-struct GeneralErrorView_Previews: PreviewProvider {
-    static var previews: some View {
-        GeneralErrorView()
+        
+        let errorLabel = UILabel()
+        errorLabel.text = "Sorry, \nsomething went \nwrong \nPlease try again"
+        errorLabel.font = .systemFont(ofSize: 35, weight: .bold)
+        errorLabel.textAlignment = .center
+        errorLabel.textColor = .white
+        view.addSubview(errorLabel)
+        
+        errorLabel.snp.makeConstraints { make in
+            make.center.equalToSuperview()
+        }
     }
 }
