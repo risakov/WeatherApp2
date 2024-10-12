@@ -42,8 +42,7 @@ class DetailCityForecastWeatherView: UIView {
         }
     }
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    private func setupView() {
         self.backgroundColor = .black
         self.addSubview(stackView)
         stackView.snp.makeConstraints {
@@ -54,7 +53,12 @@ class DetailCityForecastWeatherView: UIView {
             $0.right.equalToSuperview()
             $0.bottom.equalToSuperview().offset(30)
         }
+    }
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
         
+        setupView()
         setupLabels()
         setupStackView()
     }
