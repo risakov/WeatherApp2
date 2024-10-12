@@ -27,38 +27,29 @@ class DetailCityForecastWeatherView: UIView {
     }
     
     private func setupStackView() {
-        
+        self.addSubview(stackView)
         stackView.addArrangedSubview(cityLabel)
         stackView.addArrangedSubview(bottomLabel)
         
         cityLabel.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(-30)
+            make.top.equalToSuperview()
             make.left.equalToSuperview().offset(5)
         }
         
         bottomLabel.snp.makeConstraints { make in
-            make.top.equalTo(cityLabel.snp.bottom).offset(-30)
+            make.top.equalTo(cityLabel.snp.bottom)
             make.left.equalTo(stackView.snp.left).offset(7)
         }
-    }
-    
-    private func setupView() {
-        self.backgroundColor = .black
-        self.addSubview(stackView)
+        
         stackView.snp.makeConstraints {
-            $0.height.equalTo(77)
-            $0.width.equalTo(235)
-            $0.top.equalToSuperview().offset(30)
-            $0.left.equalToSuperview()
-            $0.right.equalToSuperview()
-            $0.bottom.equalToSuperview().offset(30)
+            $0.edges.equalToSuperview()
+
         }
     }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        setupView()
         setupLabels()
         setupStackView()
     }
@@ -72,6 +63,12 @@ class DetailCityForecastWeatherView: UIView {
 @available(iOS 17, *)
 #Preview("DetailCityForecastWeatherView") {
     let view = DetailCityForecastWeatherView()
+    view.backgroundColor = .black
+    view.snp.makeConstraints {
+        $0.height.equalTo(77)
+        $0.width.equalTo(235)
+    }
+    
     return view
 }
 
