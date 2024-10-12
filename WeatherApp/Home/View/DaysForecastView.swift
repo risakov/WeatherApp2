@@ -5,7 +5,6 @@
 //  Created by Анастасия Лыгина on 04.10.2024.
 //
 import UIKit
-
 class DaysForecastView: UIView {
 
     private lazy var stackView: UIStackView = {
@@ -16,31 +15,50 @@ class DaysForecastView: UIView {
         return stackView
     }()
 
+    private var topLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = .lightGray
+        label.font = .systemFont(ofSize: 16)
+        label.text = "1-DAY FORECAST (every 3 hours)"
+        return label
+    }()
+    
+    private var calendarImage: UIImageView = {
+        let image = UIImageView(image: UIImage(systemName: "calendar"))
+        image.contentMode = scaleAspectFill
+        image.frame = CGRect(x: 0, y: 0, width: 10, height: 10)
+        image.tintColor = .lightGray
+        return image
+    }()
+    
     private func createHourForecastView(hour: String, nightTemperature: Int, dayTemperature: Int) -> UIView {
         let view = UIView()
-        view.backgroundColor = .white
+        view.backgroundColor = .clear
         view.layer.cornerRadius = 10
-        view.layer.borderWidth = 1
-        view.layer.borderColor = UIColor.black.cgColor
+      //  view.layer.borderWidth = 1
+      //  view.layer.borderColor = UIColor.clear.cgColor
         
         let hourLabel = UILabel()
         hourLabel.text = hour
-        hourLabel.font = .systemFont(ofSize: 18)
+        hourLabel.font = .systemFont(ofSize: 26)
         hourLabel.textAlignment = .left
+        hourLabel.textColor = .white
         
         let nightTemperatureLabel = UILabel()
         nightTemperatureLabel.text = "\(nightTemperature)°"
-        nightTemperatureLabel.font = .systemFont(ofSize: 18)
+        nightTemperatureLabel.font = .systemFont(ofSize: 26)
         nightTemperatureLabel.textAlignment = .center
+        nightTemperatureLabel.textColor = .lightGray
         
         let dayTemperatureLabel = UILabel()
         dayTemperatureLabel.text = "\(dayTemperature)°"
-        dayTemperatureLabel.font = .systemFont(ofSize: 18)
+        dayTemperatureLabel.font = .systemFont(ofSize: 26)
         dayTemperatureLabel.textAlignment = .right
+        dayTemperatureLabel.textColor = .white
         
         let stackView = UIStackView(arrangedSubviews: [hourLabel, nightTemperatureLabel, dayTemperatureLabel])
         stackView.axis = .horizontal
-        stackView.spacing = 10
+        stackView.spacing = 100
         
         view.addSubview(stackView)
         stackView.snp.makeConstraints { make in
@@ -68,11 +86,18 @@ class DaysForecastView: UIView {
     }
     private func addSubviews() {
         addSubview(stackView)
+        addSubview(topLabel)
+        addSubview(calendarImage)
     }
     
     private func setuplayout() {
+        calendarImage.snp.makeConstraints { make in
+            make.top.equalToSuperview()
+            make.left.equalToSuperview().offset(10)
+        }
         stackView.snp.makeConstraints { make in
             make.leading.trailing.equalToSuperview().inset(10)
+            make.top.equalTo(topLabel.snp.bottom).offset(20)
         }
     }
     
