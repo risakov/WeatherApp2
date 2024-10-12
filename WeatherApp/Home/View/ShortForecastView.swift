@@ -27,18 +27,26 @@ class ShortForecastView: UIView {
     }
     
     private func createForecastRow(weather: WeatherOnTime) -> UIStackView {
-        let timeLabel = createLabel(text: weather.hour)
+        let hourLabel = createLabel(text: weather.hour)
         let dayTemperatureLabel = createLabel(text: "\(weather.dayTemperature)°", fontSize: 20, weight: .medium)
         let nightTemperatureLabel = createLabel(text: "\(weather.nightTemperature)°", fontSize: 20, weight: .medium)
         
-        let rowStackView = UIStackView(arrangedSubviews: [timeLabel, dayTemperatureLabel, nightTemperatureLabel])
+        let rowStackView = UIStackView(arrangedSubviews: [hourLabel, dayTemperatureLabel, nightTemperatureLabel])
         rowStackView.axis = .vertical
         rowStackView.distribution = .equalSpacing
         
         return stackView
     }
     
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        setupViews()
+        setupLayout()
+    }
+    
     private func setupViews() {
+        addSubview(stackView)
+        
         let titleLabel = createLabel(text: "1-DAY FORECAST (every 3 hours)", fontSize: 14)
         stackView.addArrangedSubview(titleLabel)
         
@@ -51,17 +59,16 @@ class ShortForecastView: UIView {
             let row = createForecastRow(weather: data)
             stackView.addArrangedSubview(row)
         }
+        
+        self.addSubview(stackView)
     }
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        setupViews()
-        self.addSubview(stackView)
+    private func setupLayout() {
         stackView.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(16)
             make.leading.equalToSuperview().offset(16)
-            make.trailing.equalToSuperview().offset(-16)
-            make.bottom.equalToSuperview().offset(-16)
+            make.trailing.equalToSuperview().inset(16)
+            make.bottom.equalToSuperview().inset(16)
         }
     }
     
