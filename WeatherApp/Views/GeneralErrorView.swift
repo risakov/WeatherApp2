@@ -21,6 +21,7 @@ class GeneralErrorView: UIViewController {
         view.addSubview(errorLabel)
         
         errorLabel.snp.makeConstraints { make in
-            make.center.equalToSuperview()        }
+            make.center.equalToSuperview()       
+        }
     }
 }
