@@ -8,9 +8,9 @@
 import UIKit
 
 class DetailCityViewController: UIViewController {
-    var viewModel: DetailCityViewModel!
+    var viewModel: DetailCityViewModel?
     
-    init(viewModel: DetailCityViewModel!) {
+    init(viewModel: DetailCityViewModel?) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
