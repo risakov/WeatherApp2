@@ -18,8 +18,19 @@ class NextHoursView: UIView {
         static let borderWidth: CGFloat = 1
     }
     
-    private let hours: [String] = ["Now", "10PM", "11PM", "12AM", "1AM"]
-    private let temperatures: [Int] = [21, 21, 19, 19, 19]
+    private let hoursDict: [String: Int] = [
+        "Now": 21,
+        "10PM": 22,
+        "11PM": 23,
+        "12AM": 24,
+        "1AM": 1]
+    
+    private let temperaturesDict: [String: Int] = [
+        "Now": 21,
+        "10PM": 21,
+        "11PM": 19,
+        "12AM": 19,
+        "1AM": 19]
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -38,15 +49,15 @@ class NextHoursView: UIView {
         stackView.axis = .horizontal
         stackView.distribution = .equalSpacing
         
-        for (index, hour) in hours.enumerated() {
-            if index < temperatures.count {
+        for (hour, _ ) in hoursDict {
                 let label = UILabel()
                 label.text = hour
                 label.font = .systemFont(ofSize: Constants.fontSize)
                 label.textColor = .white
                 
+            if let temperature = temperaturesDict[hour] {
                 let temperatureLabel = UILabel()
-                temperatureLabel.text = "\(temperatures[index])°"
+                temperatureLabel.text = "\(temperature)°"
                 temperatureLabel.font = .systemFont(ofSize: Constants.temperatureFontSize)
                 temperatureLabel.textColor = .white
                 
