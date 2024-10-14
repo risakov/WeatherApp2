@@ -25,7 +25,7 @@ class DaysForecastView: UIView {
     
     private var calendarImage: UIImageView = {
         let image = UIImageView(image: UIImage(systemName: "calendar"))
-        image.contentMode = scaleAspectFill
+        image.contentMode = .scaleAspectFill
         image.frame = CGRect(x: 0, y: 0, width: 10, height: 10)
         image.tintColor = .lightGray
         return image
@@ -98,6 +98,13 @@ class DaysForecastView: UIView {
         stackView.snp.makeConstraints { make in
             make.leading.trailing.equalToSuperview().inset(10)
             make.top.equalTo(topLabel.snp.bottom).offset(20)
+        }
+        for view in stackView.arrangedSubviews{
+            view.snp.makeConstraints { make in
+                make.height.equalTo(1)
+            }
+            view.layer.borderWidth = 1
+            view.layer.borderColor = UIColor.white.cgColor
         }
     }
     
