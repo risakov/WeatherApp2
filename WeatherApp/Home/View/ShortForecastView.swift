@@ -20,7 +20,7 @@ class ShortForecastView: UIView {
     private func createLabel(text: String, fontSize: CGFloat = 16, weight: UIFont.Weight = .regular) -> UILabel {
         let label = UILabel()
         label.text = text
-        label.font = UIFont.systemFont(ofSize: fontSize, weight: weight)
+        label.font = .systemFont(ofSize: fontSize, weight: weight)
         label.textColor = .white
         
         return label
