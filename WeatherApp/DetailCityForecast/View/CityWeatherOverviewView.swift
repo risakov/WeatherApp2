@@ -15,6 +15,8 @@ class CityWeatherOverviewView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
+        self.backgroundColor = .red
+        
         setupLabels()
         setupHorizontalStackView()
         setupStackView()
@@ -31,28 +33,28 @@ class CityWeatherOverviewView: UIView {
     }
     
     private func setupLabels() {
-        cityNameLabel.text = "Rostov-on-Don"
-        cityNameLabel.font = UIFont.systemFont(ofSize: 26, weight: .regular)
+        cityNameLabel.text = Constants.cityName
+        cityNameLabel.font = UIFont.systemFont(ofSize: Constants.cityLabelFont, weight: .regular)
         cityNameLabel.textColor = .white
         cityNameLabel.textAlignment = .center
 
-        temperatureLabel.text = "21°"
-        temperatureLabel.font = UIFont.systemFont(ofSize: 70, weight: .thin)
+        temperatureLabel.text = Constants.temp
+        temperatureLabel.font = UIFont.systemFont(ofSize: Constants.tempLabelFont, weight: .thin)
         temperatureLabel.textColor = .white
         temperatureLabel.textAlignment = .center
 
-        weatherDescrLabel.text = "Overcast Clouds"
-        weatherDescrLabel.font = UIFont.systemFont(ofSize: 24, weight: .regular)
+        weatherDescrLabel.text = Constants.weather
+        weatherDescrLabel.font = UIFont.systemFont(ofSize: Constants.weatherLabelFont, weight: .regular)
         weatherDescrLabel.textColor = .white
         weatherDescrLabel.textAlignment = .center
 
-        highTempLabel.text = "H:29°"
-        highTempLabel.font = UIFont.systemFont(ofSize: 21, weight: .regular)
+        highTempLabel.text = Constants.highTemp
+        highTempLabel.font = UIFont.systemFont(ofSize: Constants.bottomLabelsFont, weight: .regular)
         highTempLabel.textColor = .white
         highTempLabel.textAlignment = .center
 
-        lowTempLabel.text = "L:15°"
-        lowTempLabel.font = UIFont.systemFont(ofSize: 21, weight: .regular)
+        lowTempLabel.text = Constants.lowTemp
+        lowTempLabel.font = UIFont.systemFont(ofSize: Constants.bottomLabelsFont, weight: .regular)
         lowTempLabel.textColor = .white
         lowTempLabel.textAlignment = .center
     }
@@ -61,7 +63,7 @@ class CityWeatherOverviewView: UIView {
         horizontalStackView.axis = .horizontal
         horizontalStackView.alignment = .center
         horizontalStackView.distribution = .equalSpacing
-        horizontalStackView.spacing = 10
+        horizontalStackView.spacing = Constants.horizontalStackViewSpacing
         horizontalStackView.backgroundColor = .black
 
         horizontalStackView.addArrangedSubview(highTempLabel)
@@ -71,7 +73,7 @@ class CityWeatherOverviewView: UIView {
     private func setupStackView() {
         stackView.axis = .vertical
         stackView.alignment = .center
-        stackView.spacing = 7
+        stackView.spacing = Constants.stackViewSpacing
         stackView.backgroundColor = .black
 
         stackView.addArrangedSubview(cityNameLabel)
@@ -83,16 +85,28 @@ class CityWeatherOverviewView: UIView {
     }
 
     private func setupConstraints() {
-        stackView.snp.makeConstraints { make in
-            make.leading.equalTo(self.safeAreaLayoutGuide.snp.leading).offset(20)
-            make.trailing.equalTo(self.safeAreaLayoutGuide.snp.trailing).offset(-20)
-            make.centerY.equalTo(self.snp.centerY)
-            make.top.equalTo(self.safeAreaLayoutGuide.snp.top).offset(20)
-            make.bottom.equalTo(self.safeAreaLayoutGuide.snp.bottom).offset(-20)
+        stackView.snp.makeConstraints {
+            $0.edges.equalToSuperview()
         }
     }
 }
 
+extension CityWeatherOverviewView {
+    private enum Constants {
+        
+        static let horizontalStackViewSpacing: CGFloat = 5
+        static let stackViewSpacing: CGFloat = 10
+        static let bottomLabelsFont: CGFloat = 21
+        static let weatherLabelFont: CGFloat = 24
+        static let tempLabelFont: CGFloat = 85
+        static let cityLabelFont: CGFloat = 32
+        static let cityName = "Rostov-on-Don"
+        static let temp = "21°"
+        static let weather = "Overcast Clouds"
+        static let highTemp = "H:29°"
+        static let lowTemp = "L:15°"
+    }
+}
 
 
 @available(iOS 17.0, *)
