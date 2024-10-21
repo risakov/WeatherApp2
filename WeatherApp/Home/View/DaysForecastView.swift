@@ -5,8 +5,10 @@
 //  Created by Анастасия Лыгина on 04.10.2024.
 //
 import UIKit
-class DaysForecastView: UIView {
+import SnapKit
 
+class DaysForecastView: UIView {
+    
     private lazy var stackView: UIStackView = {
         let stackView = UIStackView()
         stackView.axis = .vertical
@@ -35,9 +37,7 @@ class DaysForecastView: UIView {
         let view = UIView()
         view.backgroundColor = .clear
         view.layer.cornerRadius = 10
-      //  view.layer.borderWidth = 1
-      //  view.layer.borderColor = UIColor.clear.cgColor
-        
+
         let hourLabel = UILabel()
         hourLabel.text = hour
         hourLabel.font = .systemFont(ofSize: 26)
@@ -58,18 +58,21 @@ class DaysForecastView: UIView {
         
         let stackView = UIStackView(arrangedSubviews: [hourLabel, nightTemperatureLabel, dayTemperatureLabel])
         stackView.axis = .horizontal
+        stackView.distribution = .equalSpacing
         stackView.spacing = 100
         
         view.addSubview(stackView)
         stackView.snp.makeConstraints { make in
             make.edges.equalToSuperview().inset(10)
         }
-        
         return view
     }
 
     private func setupViews() {
         addSubview(stackView)
+        addSubview(calendarImage)
+        addSubview(topLabel)
+        
         for (hour, nightTemperature, dayTemperature) in [
             ("17:44", 15, 29),
             ("20:44", 15, 29),
@@ -84,20 +87,20 @@ class DaysForecastView: UIView {
             stackView.addArrangedSubview(hourForecastView)
         }
     }
-    private func addSubviews() {
-        addSubview(stackView)
-        addSubview(topLabel)
-        addSubview(calendarImage)
-    }
     
     private func setuplayout() {
         calendarImage.snp.makeConstraints { make in
             make.top.equalToSuperview()
             make.left.equalToSuperview().offset(10)
         }
+        topLabel.snp.makeConstraints { make in
+            make.top.equalTo(calendarImage.snp.bottom).offset(10)
+            make.left.equalToSuperview().offset(10)
+        }
         stackView.snp.makeConstraints { make in
             make.leading.trailing.equalToSuperview().inset(10)
             make.top.equalTo(topLabel.snp.bottom).offset(20)
+            make.bottom.equalToSuperview().inset(10)
         }
         for view in stackView.arrangedSubviews{
             view.snp.makeConstraints { make in
@@ -111,14 +114,12 @@ class DaysForecastView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupViews()
-        addSubviews()
         setuplayout()
         }
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
         setupViews()
-        addSubviews()
         setuplayout()
         }
     }
