@@ -1,16 +1,20 @@
 import UIKit
 import Combine
 import CoreLocation
+import SnapKit
 
 class HomeViewController: UIViewController {
     
     private let viewModel = HomeViewModel(weatherService: WeatherServiceImpl.shared)
     private var tableView = UITableView(frame: .zero)
     private var cancellable = Set<AnyCancellable>()
+    private var searchBar = UISearchBar()
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.backgroundColor = .black
         
+        setupSearchBar()
         setupTableView()
         setupBinding()
     }
@@ -36,9 +40,42 @@ class HomeViewController: UIViewController {
         tableView.dataSource = self
         tableView.delegate = self
         tableView.snp.makeConstraints {
-            $0.edges.equalToSuperview()
+            $0.top.equalTo(searchBar.snp.bottom)
+            $0.left.equalToSuperview()
+            $0.right.equalToSuperview()
+            $0.bottom.equalToSuperview()
         }
         tableView.register(HomeCell.self, forCellReuseIdentifier: HomeCell.Constants.identifier)
+    }
+    
+    private func setupSearchBar() {
+        view.addSubview(searchBar)
+        
+        searchBar.searchBarStyle = .prominent
+        searchBar.barTintColor = .clear
+        searchBar.placeholder = Constants.placeholder
+        searchBar.returnKeyType = .default
+        searchBar.isTranslucent = true
+        searchBar.delegate = self
+        
+        if let textfield = searchBar.value(forKey: "searchField") as? UITextField {
+            
+            textfield.backgroundColor = UIColor(hexCode: "#1b1b1c")
+            textfield.attributedPlaceholder = NSAttributedString(string: textfield.placeholder ?? "", attributes: [NSAttributedString.Key.foregroundColor : UIColor.white])
+            
+            textfield.textColor = UIColor.white
+            
+            if let leftView = textfield.leftView as? UIImageView {
+                leftView.image = leftView.image?.withRenderingMode(.alwaysTemplate)
+                leftView.tintColor = UIColor.white
+            }
+        }
+        
+        searchBar.snp.makeConstraints { make in
+            make.top.equalToSuperview().offset(141)
+            make.left.equalToSuperview().offset(10)
+            make.right.equalToSuperview().inset(10)
+        }
     }
     
     // MARK: - Binding
@@ -74,6 +111,14 @@ extension HomeViewController: UITableViewDataSource {
     }
 }
 
+// MARK: - UISearchBarDelegate
+extension HomeViewController: UISearchBarDelegate {
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.resignFirstResponder()
+    }
+}
+
 // MARK: - Constants
 extension HomeViewController {
     
@@ -81,6 +126,7 @@ extension HomeViewController {
         
         static let tableViewCellHeight: CGFloat = 117
         static let title = "Weather"
+        static let placeholder = "Search for a city"
     }
 }
 
