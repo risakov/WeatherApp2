@@ -9,6 +9,7 @@ class HomeViewController: UIViewController {
     private var tableView = UITableView(frame: .zero)
     private var cancellable = Set<AnyCancellable>()
     private var searchBar = UISearchBar()
+    private var isFoundCity: Bool = true
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -46,6 +47,8 @@ class HomeViewController: UIViewController {
             $0.bottom.equalToSuperview()
         }
         tableView.register(HomeCell.self, forCellReuseIdentifier: HomeCell.Constants.identifier)
+        
+        tableView.register(ErrorCell.self, forCellReuseIdentifier: ErrorCell.Constants.identifier)
     }
     
     private func setupSearchBar() {
@@ -101,13 +104,30 @@ extension HomeViewController: UITableViewDelegate {
 extension HomeViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.weatherArray.count
+        if isFoundCity == true {
+            
+            return viewModel.weatherArray.count
+            
+        } else {
+            
+            return 1
+        }
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: HomeCell.Constants.identifier, for: indexPath) as? HomeCell else { return UITableViewCell() }
-        cell.update(with: viewModel.weatherArray[indexPath.row])
-        return cell
+        
+        if isFoundCity == true {
+            
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: HomeCell.Constants.identifier, for: indexPath) as? HomeCell else { return UITableViewCell() }
+            cell.update(with: viewModel.weatherArray[indexPath.row])
+            
+            return cell
+            
+        } else {
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: ErrorCell.Constants.identifier, for: indexPath) as? ErrorCell else { return UITableViewCell() }
+            
+            return cell
+        }
     }
 }
 
@@ -117,21 +137,36 @@ extension HomeViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchBar.resignFirstResponder()
     }
-}
-
-// MARK: - Constants
-extension HomeViewController {
     
-    private enum Constants {
-        
-        static let tableViewCellHeight: CGFloat = 117
-        static let title = "Weather"
-        static let placeholder = "Search for a city"
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        if viewModel.weatherArray.contains(where: { $0.title.lowercased().contains(searchText.lowercased()) }) {
+            Timer.scheduledTimer(withTimeInterval: 5.0, repeats: false) {_ in
+                self.isFoundCity = true
+                self.tableView.reloadData()
+            }
+        } else {
+            Timer.scheduledTimer(withTimeInterval: 5.0, repeats: false) {_ in
+                self.isFoundCity = false
+                self.tableView.reloadData()
+            }
+        }
     }
 }
-
-// MARK: - Previews
-@available(iOS 17, *)
-#Preview("HomeViewController") {
-    return UINavigationController(rootViewController: HomeViewController())
+    
+    // MARK: - Constants
+    extension HomeViewController {
+        
+        private enum Constants {
+            
+            static let tableViewCellHeight: CGFloat = 117
+            static let title = "Weather"
+            static let placeholder = "Search for a city"
+        }
+    }
+    
+    // MARK: - Previews
+    @available(iOS 17, *)
+    #Preview("HomeViewController") {
+        return UINavigationController(rootViewController: HomeViewController())
 }
+
