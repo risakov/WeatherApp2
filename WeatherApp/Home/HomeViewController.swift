@@ -46,6 +46,8 @@ class HomeViewController: UIViewController {
             $0.bottom.equalToSuperview()
         }
         tableView.register(HomeCell.self, forCellReuseIdentifier: HomeCell.Constants.identifier)
+        
+        tableView.register(ErrorCell.self, forCellReuseIdentifier: ErrorCell.Constants.identifier)
     }
     
     private func setupSearchBar() {
@@ -56,7 +58,6 @@ class HomeViewController: UIViewController {
         searchBar.placeholder = Constants.placeholder
         searchBar.returnKeyType = .default
         searchBar.isTranslucent = true
-        searchBar.delegate = self
         
         if let textfield = searchBar.value(forKey: "searchField") as? UITextField {
             
@@ -86,6 +87,15 @@ class HomeViewController: UIViewController {
             self?.tableView.reloadData()
         }
         .store(in: &cancellable)
+        
+        viewModel.bind(fieldText: searchBar.searchTextField.textPublisher)
+        
+        viewModel.$state
+            .receive(on: RunLoop.main)
+            .sink { [weak self] _ in
+                self?.tableView.reloadData()
+            }
+            .store(in: &cancellable)
     }
 }
 
@@ -101,24 +111,39 @@ extension HomeViewController: UITableViewDelegate {
 extension HomeViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.weatherArray.count
+        switch viewModel.state {
+        case .idle:
+            return viewModel.weatherArray.count
+        case .found:
+            return viewModel.weatherArray.count
+        case .error:
+            return 1
+        }
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: HomeCell.Constants.identifier, for: indexPath) as? HomeCell else { return UITableViewCell() }
-        cell.update(with: viewModel.weatherArray[indexPath.row])
-        return cell
+        
+        switch viewModel.state {
+        case .idle:
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: HomeCell.Constants.identifier, for: indexPath) as? HomeCell else { return UITableViewCell() }
+            cell.update(with: viewModel.weatherArray[indexPath.row])
+            
+            return cell
+            
+        case .found:
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: HomeCell.Constants.identifier, for: indexPath) as? HomeCell else { return UITableViewCell() }
+            cell.update(with: viewModel.weatherArray[indexPath.row])
+            
+            return cell
+            
+        case .error:
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: ErrorCell.Constants.identifier, for: indexPath) as? ErrorCell else { return UITableViewCell() }
+            
+            return cell
+        }
     }
 }
-
-// MARK: - UISearchBarDelegate
-extension HomeViewController: UISearchBarDelegate {
     
-    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        searchBar.resignFirstResponder()
-    }
-}
-
 // MARK: - Constants
 extension HomeViewController {
     
@@ -130,8 +155,21 @@ extension HomeViewController {
     }
 }
 
+extension UITextField {
+    var textPublisher: AnyPublisher<String, Never> {
+        var textPublisher: AnyPublisher<String, Never> {
+            NotificationCenter.default
+                .publisher(for: UITextField.textDidChangeNotification, object: self)
+                .compactMap { ($0.object as? UITextField)?.text }
+                .eraseToAnyPublisher()
+        }
+        return textPublisher
+    }
+}
+    
 // MARK: - Previews
 @available(iOS 17, *)
 #Preview("HomeViewController") {
     return UINavigationController(rootViewController: HomeViewController())
 }
+
