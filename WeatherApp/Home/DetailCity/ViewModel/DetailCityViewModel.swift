@@ -19,18 +19,29 @@ class DetailCityViewModel: ObservableObject {
 
     func fetchWeather(for city: String) {
         weatherService.fetch16DayWeather(for: city) { [weak self] result in
-            switch result {
-            case .success(let weatherData):
-                DispatchQueue.main.async {
+            DispatchQueue.main.async {
+                switch result {
+                case .success(let weatherData):
                     self?.weatherData = weatherData
                     self?.errorMessage = nil
-                }
-            case .failure(let error):
-                DispatchQueue.main.async {
-                    self?.errorMessage = error.localizedDescription
+                case .failure(let error):
                     self?.weatherData = nil
+                    self?.errorMessage = self?.handleError(error)
                 }
             }
+        }
+    }
+
+    private func handleError(_ error: Error) -> String {
+        if let urlError = error as? URLError {
+            switch urlError.code {
+            case .timedOut:
+                return "The request has timed out. Try again"
+            default:
+                return "An error occurred while loading data. Please try again later."
+            }
+        } else {
+            return "An unknown error has occurred. Please try again later."
         }
     }
 }
