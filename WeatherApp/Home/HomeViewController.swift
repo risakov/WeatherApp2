@@ -9,7 +9,6 @@ class HomeViewController: UIViewController {
     private var tableView = UITableView(frame: .zero)
     private var cancellable = Set<AnyCancellable>()
     private var searchBar = UISearchBar()
-    private var isFoundCity: Bool = true
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -59,7 +58,6 @@ class HomeViewController: UIViewController {
         searchBar.placeholder = Constants.placeholder
         searchBar.returnKeyType = .default
         searchBar.isTranslucent = true
-        searchBar.delegate = self
         
         if let textfield = searchBar.value(forKey: "searchField") as? UITextField {
             
@@ -89,6 +87,15 @@ class HomeViewController: UIViewController {
             self?.tableView.reloadData()
         }
         .store(in: &cancellable)
+        
+        viewModel.bind(fieldText: searchBar.searchTextField.textPublisher)
+        
+        viewModel.$state
+            .receive(on: RunLoop.main)
+            .sink { [weak self] _ in
+                self?.tableView.reloadData()
+            }
+            .store(in: &cancellable)
     }
 }
 
@@ -104,69 +111,65 @@ extension HomeViewController: UITableViewDelegate {
 extension HomeViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if isFoundCity == true {
-            
+        switch viewModel.state {
+        case .idle:
             return viewModel.weatherArray.count
-            
-        } else {
-            
+        case .found:
+            return viewModel.weatherArray.count
+        case .error:
             return 1
         }
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        if isFoundCity == true {
-            
+        switch viewModel.state {
+        case .idle:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: HomeCell.Constants.identifier, for: indexPath) as? HomeCell else { return UITableViewCell() }
             cell.update(with: viewModel.weatherArray[indexPath.row])
             
             return cell
             
-        } else {
+        case .found:
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: HomeCell.Constants.identifier, for: indexPath) as? HomeCell else { return UITableViewCell() }
+            cell.update(with: viewModel.weatherArray[indexPath.row])
+            
+            return cell
+            
+        case .error:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: ErrorCell.Constants.identifier, for: indexPath) as? ErrorCell else { return UITableViewCell() }
             
             return cell
         }
     }
 }
-
-// MARK: - UISearchBarDelegate
-extension HomeViewController: UISearchBarDelegate {
     
-    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        searchBar.resignFirstResponder()
+// MARK: - Constants
+extension HomeViewController {
+    
+    private enum Constants {
+        
+        static let tableViewCellHeight: CGFloat = 117
+        static let title = "Weather"
+        static let placeholder = "Search for a city"
     }
-    
-    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        if viewModel.weatherArray.contains(where: { $0.title.lowercased().contains(searchText.lowercased()) }) {
-            Timer.scheduledTimer(withTimeInterval: 5.0, repeats: false) {_ in
-                self.isFoundCity = true
-                self.tableView.reloadData()
-            }
-        } else {
-            Timer.scheduledTimer(withTimeInterval: 5.0, repeats: false) {_ in
-                self.isFoundCity = false
-                self.tableView.reloadData()
-            }
+}
+
+extension UITextField {
+    var textPublisher: AnyPublisher<String, Never> {
+        var textPublisher: AnyPublisher<String, Never> {
+            NotificationCenter.default
+                .publisher(for: UITextField.textDidChangeNotification, object: self)
+                .compactMap { ($0.object as? UITextField)?.text }
+                .eraseToAnyPublisher()
         }
+        return textPublisher
     }
 }
     
-    // MARK: - Constants
-    extension HomeViewController {
-        
-        private enum Constants {
-            
-            static let tableViewCellHeight: CGFloat = 117
-            static let title = "Weather"
-            static let placeholder = "Search for a city"
-        }
-    }
-    
-    // MARK: - Previews
-    @available(iOS 17, *)
-    #Preview("HomeViewController") {
-        return UINavigationController(rootViewController: HomeViewController())
+// MARK: - Previews
+@available(iOS 17, *)
+#Preview("HomeViewController") {
+    return UINavigationController(rootViewController: HomeViewController())
 }
 
